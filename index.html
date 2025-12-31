@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Your 2026 Journey Awaits ✨</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;600;700&family=Outfit:wght@800&family=Space+Mono:wght@700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Particle Canvas Background -->
+    <canvas id="particleCanvas"></canvas>
+    
+    <!-- Sound Toggle -->
+    <button class="sound-toggle" id="soundToggle">
+        <span class="sound-icon">🔊</span>
+    </button>
+
+    <!-- Main Container -->
+    <div class="container">
+        
+        <!-- Landing Screen -->
+        <section id="landingScreen" class="screen active">
+            
+            <!-- Large Background Outline Text (Left Side) -->
+            <div class="outline-container">
+                <svg viewBox="0 0 100 200" class="outline-svg">
+                    <!-- Vertical 2026 -->
+                    <text x="10" y="50" font-size="50" class="outline-text">20</text>
+                    <text x="10" y="100" font-size="50" class="outline-text">26</text>
+                </svg>
+            </div>
+
+            <!-- Magnetic Floating Elements Container -->
+            <div id="magneticContainer" class="magnetic-container"></div>
+            
+            <div class="landing-content">
+                <h1 class="glitch" data-text="2026">2026</h1>
+                <p class="subtitle">Your journey begins...</p>
+                <div class="countdown" id="countdown"></div>
+                
+                <!-- Name Input -->
+                <div class="name-input-container">
+                    <input type="text" id="userName" class="name-input" placeholder="Enter your name..." maxlength="30">
+                </div>
+                
+                <button class="cta-button" id="startJourney">
+                    <span>Begin Your Journey</span>
+                    <div class="button-glow"></div>
+                </button>
+            </div>
+            
+            <div class="landing-scroll-hint">SCROLL TO EXPLORE</div>
+            
+            <div class="fireworks-container" id="fireworksContainer"></div>
+        </section>
+
+        <!-- Interactive Experience Screen -->
+        <section id="experienceScreen" class="screen">
+            <div class="experience-content">
+                
+                <!-- Personalized Message -->
+                <div class="personalized-message" id="personalizedMessage" style="display: none;">
+                    <h2 class="section-title">A Special Message</h2>
+                    <div class="message-content">
+                        <p class="message-text" id="messageText"></p>
+                        <p class="message-signature">~ Ritwik Mittal</p>
+                    </div>
+                </div>
+
+                <!-- Fortune Cookie Section -->
+                <div class="fortune-section">
+                    <h2 class="section-title">What Does 2026 Hold For You?</h2>
+                    <div class="fortune-cookie" id="fortuneCookie">
+                        <div class="cookie-wrapper">
+                            <div class="cookie closed" id="cookie">
+                                <div class="cookie-half left"></div>
+                                <div class="cookie-half right"></div>
+                                <div class="fortune-paper" id="fortunePaper">
+                                    <p id="fortuneText"></p>
+                                </div>
+                            </div>
+                            <p class="cookie-hint">Click the cookie!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wish Wall Section -->
+                <div class="wish-wall-section">
+                    <h2 class="section-title">Make A Wish for 2026</h2>
+                    <div class="wish-input-container">
+                        <input type="text" id="wishInput" placeholder="Type your wish..." maxlength="50">
+                        <button class="wish-button" id="sendWish">✨ Send</button>
+                    </div>
+                    <div class="wishes-container" id="wishesContainer"></div>
+                </div>
+
+                <!-- Final Message -->
+                <div class="final-message">
+                    <h2 class="final-title">Here's to an Extraordinary 2026!</h2>
+                    <p class="final-text">May this year bring you joy, success, and unforgettable moments.</p>
+                    <p class="signature">With love and best wishes,<br><strong>From Me to You 💫</strong></p>
+                    <button class="share-button" id="shareButton">
+                        <span>📱 Share This Experience</span>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Audio Element (Hidden) -->
+    <audio id="bgMusic" loop>
+        <!-- You can add actual audio source here -->
+        <!-- <source src="celebration.mp3" type="audio/mpeg"> -->
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>

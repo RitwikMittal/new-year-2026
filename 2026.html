@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026: The Bright Horizon</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Archivo+Black&family=Inter:wght@300;400;600&family=Kanit:ital,wght@0,800;1,800&family=Outfit:wght@800&family=Righteous&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Global & Reset */
+        body {
+            cursor: default;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* --- Section 1: Hero Specifics --- */
+        .outline-text {
+            fill: transparent;
+            stroke: #0A0A0A;
+            stroke-width: 1.5px;
+            stroke-dasharray: 2000;
+            stroke-dashoffset: 2000;
+            animation: drawStroke 3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            font-family: 'Kanit', sans-serif;
+            font-style: italic;
+        }
+
+        @keyframes drawStroke {
+            to { stroke-dashoffset: 0; }
+        }
+
+        .floating-char {
+            font-family: 'Outfit', sans-serif;
+            position: absolute;
+            user-select: none;
+            will-change: transform;
+            transition: color 0.3s ease;
+        }
+
+        .cursor-trail {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            background: rgba(10, 10, 10, 0.2);
+            border-radius: 50%;
+            pointer-events: none;
+            mix-blend-mode: multiply;
+            z-index: 50;
+        }
+
+        /* --- Section 2: Geometric Specifics --- */
+        .bg-grid-pattern {
+            background-color: #F4F7F6;
+            background-image: 
+                linear-gradient(#E2E8F0 1px, transparent 1px),
+                linear-gradient(90deg, #E2E8F0 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .geo-number {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Construction Animations */
+        .construct-slide-up { transform: translateY(100%); transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .in-view .construct-slide-up { transform: translateY(0); }
+
+        .construct-pop { transform: scale(0); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .in-view .construct-pop { transform: scale(1); }
+
+        .construct-width { width: 0; transition: width 1s cubic-bezier(0.22, 1, 0.36, 1); }
+        .in-view .construct-width { width: 100%; }
+
+        /* Breathing Animation */
+        .breathing { animation: breathe 4s ease-in-out infinite; }
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* --- Section 3: Brutalist Specifics --- */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: repeat(12, 1fr);
+            gap: 1rem;
+            height: 100%;
+            padding: 2rem;
+        }
+
+        .bento-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            opacity: 0; 
+            transform: translateY(50px) scale(0.95);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .bento-item.locked-in {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+        
+        .bento-item.locked-in h2 {
+            animation: stampThud 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.2s;
+            opacity: 0;
+            transform: scale(2);
+        }
+
+        @keyframes stampThud {
+            0% { opacity: 0; transform: scale(2); }
+            70% { opacity: 1; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .shake-screen {
+            animation: shake 0.3s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+
+        /* Slot Machine Text Styles */
+        .font-var-1 { font-family: 'Archivo Black', sans-serif; }
+        .font-var-2 { font-family: 'Righteous', cursive; }
+        .font-var-3 { font-family: 'Abril Fatface', cursive; }
+        .font-var-4 { font-family: 'Space Mono', monospace; font-weight: 700; letter-spacing: -2px; }
+        .font-var-5 { font-family: 'Kanit', sans-serif; font-style: italic; font-weight: 900; -webkit-text-stroke: 1px black; color: transparent; }
+
+    </style>
+</head>
+<body class="bg-white text-black">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 flex justify-between items-center p-6 mix-blend-difference text-white pointer-events-none">
+        <div class="text-sm font-bold tracking-widest pointer-events-auto cursor-pointer">2026</div>
+        <div class="w-8 h-2 bg-white mb-1 rounded-full pointer-events-auto cursor-pointer"></div>
+    </nav>
+
+    <!-- SECTION 1: THE MODERN MINIMALIST (HERO) -->
+    <section id="section-1" class="relative w-full h-screen bg-white overflow-hidden flex items-center">
+        
+        <!-- Large Background Outline Text -->
+        <div class="absolute left-0 top-0 h-full w-1/2 flex items-center justify-center p-10 z-10 pointer-events-none">
+             <svg viewBox="0 0 100 200" class="w-full h-full preserve-3d">
+                <!-- Vertical 2026 -->
+                <text x="10" y="50" font-size="50" class="outline-text" transform="rotate(0)">20</text>
+                <text x="10" y="100" font-size="50" class="outline-text" transform="rotate(0)">26</text>
+             </svg>
+        </div>
+
+        <!-- Scattered Cloud Container (Interactive) -->
+        <div id="scatter-container" class="absolute inset-0 w-full h-full z-20 pointer-events-auto">
+            <!-- Items injected via JS -->
+        </div>
+
+        <div class="absolute bottom-10 left-10 text-xs font-mono opacity-50">
+            SCROLL TO EXPLORE
+        </div>
+    </section>
+
+
+    <!-- SECTION 2: THE DIGITAL PLAYGROUND (GEOMETRIC) -->
+    <section id="section-2" class="relative w-full h-screen bg-grid-pattern overflow-hidden flex flex-col items-center justify-center">
+        
+        <div class="grid grid-cols-4 gap-4 w-full max-w-6xl px-4 h-[60vh]">
+            
+            <!-- Number 2: Striped -->
+            <div class="geo-number relative bg-transparent flex items-center justify-center breathing" style="animation-delay: 0s;">
+                <div class="w-full h-full relative">
+                    <!-- Construction Parts -->
+                    <div class="absolute top-0 left-0 w-full h-[20%] bg-[#2D5BFF] construct-width" style="transition-delay: 0.1s;"></div>
+                    <div class="absolute top-[20%] right-0 w-[20%] h-[30%] bg-[#2D5BFF] construct-slide-up" style="transition-delay: 0.2s;"></div>
+                    <div class="absolute top-[50%] left-0 w-full h-[20%] bg-[#2D5BFF] construct-width" style="transition-delay: 0.3s;"></div>
+                    <div class="absolute bottom-[20%] left-0 w-[20%] h-[30%] bg-[#2D5BFF] construct-slide-up" style="transition-delay: 0.4s;"></div>
+                    <div class="absolute bottom-0 left-0 w-full h-[20%] bg-[#2D5BFF] construct-width" style="transition-delay: 0.5s;"></div>
+                    
+                    <!-- Stripes Overlay -->
+                    <div class="absolute inset-0 z-10" style="background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.8) 10px, rgba(255,255,255,0.8) 20px);"></div>
+                </div>
+            </div>
+
+            <!-- Number 0: Dotted/Solid Mix -->
+            <div class="geo-number relative flex items-center justify-center breathing" style="animation-delay: 0.5s;">
+                <!-- Big Circle -->
+                <div class="w-[80%] aspect-square rounded-full border-[20px] border-[#FF00FF] construct-pop flex items-center justify-center relative bg-white">
+                    <!-- Inner Dots -->
+                    <div class="absolute w-4 h-4 bg-[#FF00FF] rounded-full top-4 left-4 construct-pop" style="transition-delay: 0.6s;"></div>
+                    <div class="absolute w-4 h-4 bg-[#FF00FF] rounded-full bottom-4 right-4 construct-pop" style="transition-delay: 0.7s;"></div>
+                    <div class="absolute w-4 h-4 bg-[#FF00FF] rounded-full top-4 right-4 construct-pop" style="transition-delay: 0.8s;"></div>
+                    <div class="absolute w-4 h-4 bg-[#FF00FF] rounded-full bottom-4 left-4 construct-pop" style="transition-delay: 0.9s;"></div>
+                </div>
+            </div>
+
+            <!-- Number 2: Yellow Variant -->
+            <div class="geo-number relative flex items-center justify-center breathing" style="animation-delay: 1s;">
+                 <div class="w-full h-full relative">
+                    <div class="absolute top-0 left-0 w-[80%] h-[15%] bg-[#FFD700] construct-width"></div>
+                    <div class="absolute top-0 right-0 w-[20%] h-[60%] bg-[#FFD700] construct-slide-up"></div>
+                    <div class="absolute bottom-[40%] left-0 w-full h-[15%] bg-[#FFD700] construct-width" style="transition-delay: 0.2s;"></div>
+                    <div class="absolute bottom-0 left-0 w-[20%] h-[50%] bg-[#FFD700] construct-slide-up" style="transition-delay: 0.3s;"></div>
+                    <div class="absolute bottom-0 left-0 w-full h-[15%] bg-[#FFD700] construct-width" style="transition-delay: 0.4s;"></div>
+                </div>
+            </div>
+
+            <!-- Number 6: Quarter Circles Cyan -->
+            <div class="geo-number relative flex items-center justify-center breathing" style="animation-delay: 1.5s;">
+                <div class="relative w-full h-full flex flex-col justify-between">
+                     <div class="w-full h-[45%] bg-[#00FFFF] rounded-tl-[100px] construct-slide-up origin-bottom"></div>
+                     <div class="w-full h-[45%] bg-[#00FFFF] rounded-full construct-pop flex items-center justify-center">
+                         <div class="w-[40%] h-[40%] bg-[#F4F7F6] rounded-full"></div>
+                     </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- SECTION 3: THE PASTEL BLOCK PARTY (FOOTER) -->
+    <section id="section-3" class="relative w-full h-screen bg-[#FFFFE0] overflow-hidden">
+        
+        <div class="bento-grid h-full w-full">
+            
+            <!-- Block 1: Mint -->
+            <div class="bento-item col-span-12 md:col-span-6 row-span-4 bg-[#D0F0C0] stamp-target" data-delay="0">
+                <h2 class="text-6xl md:text-8xl font-black font-var-1 pointer-events-none">20</h2>
+            </div>
+
+            <!-- Block 2: Coral -->
+            <div class="bento-item col-span-12 md:col-span-6 row-span-8 bg-[#FFDAC1] stamp-target flex-col" data-delay="100">
+                <h2 class="text-6xl md:text-9xl font-black font-var-1 pointer-events-none mb-4">26</h2>
+                <p class="text-sm font-mono tracking-widest uppercase">The Future is Bright</p>
+            </div>
+
+            <!-- Block 3: Lavender -->
+            <div class="bento-item col-span-12 md:col-span-6 row-span-4 bg-[#E2F0CB] stamp-target" data-delay="200">
+                <h2 class="text-5xl md:text-7xl font-black font-var-1 pointer-events-none">HAPPY NEW YEAR</h2>
+            </div>
+            
+            <!-- Footer Strip -->
+            <div class="bento-item col-span-12 row-span-4 bg-black text-[#FFFFE0] stamp-target" data-delay="300">
+                <div class="flex flex-col items-center">
+                    <h2 class="text-4xl font-var-4 mb-2">START</h2>
+                    <button class="px-8 py-3 border-2 border-[#FFFFE0] hover:bg-[#FFFFE0] hover:text-black transition-colors rounded-full font-bold">
+                        ENTER EXPERIENCE
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- Custom Cursor -->
+    <div id="cursor" class="fixed w-4 h-4 bg-black rounded-full pointer-events-none z-[100] hidden md:block mix-blend-difference transition-transform duration-100 ease-out"></div>
+
+    <script>
+        // --- CUSTOM CURSOR ---
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            cursor.style.transform = `translate(-50%, -50%)`;
+        });
+
+        // --- SECTION 1: MAGNETIC REPULSION ---
+        const scatterContainer = document.getElementById('scatter-container');
+        const numItems = 30;
+        const chars = ['2', '0', '2', '6', '★', '●', '✦'];
+        const floatingElements = [];
+        
+        // Init Floating Elements
+        for (let i = 0; i < numItems; i++) {
+            const span = document.createElement('span');
+            span.classList.add('floating-char');
+            span.innerText = chars[Math.floor(Math.random() * chars.length)];
+            
+            // Random styling
+            const size = Math.random() * 60 + 20; // 20px to 80px
+            span.style.fontSize = `${size}px`;
+            span.style.fontWeight = Math.random() > 0.5 ? '800' : '300';
+            
+            // Initial Position (Mostly right side)
+            let posX = (Math.random() * 50 + 40) + '%'; // 40-90% width
+            let posY = Math.random() * 90 + 5 + '%';
+            
+            span.style.left = posX;
+            span.style.top = posY;
+            
+            // Store physics data
+            const x = window.innerWidth * (parseFloat(posX)/100);
+            const y = window.innerHeight * (parseFloat(posY)/100);
+            
+            floatingElements.push({
+                element: span,
+                originX: x,
+                originY: y,
+                x: x,
+                y: y,
+                vx: 0,
+                vy: 0,
+                mass: size / 10 // bigger items move slower
+            });
+            
+            scatterContainer.appendChild(span);
+        }
+
+        // Physics Loop
+        let mouseX = -1000;
+        let mouseY = -1000;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            
+            // Create Ink Trail
+            if (window.scrollY < window.innerHeight) {
+                createTrail(e.clientX, e.clientY);
+            }
+        });
+
+        function createTrail(x, y) {
+            const dot = document.createElement('div');
+            dot.classList.add('cursor-trail');
+            dot.style.left = (x - 4) + 'px';
+            dot.style.top = (y - 4) + 'px';
+            document.body.appendChild(dot);
+            
+            // Animate out
+            const angle = Math.random() * Math.PI * 2;
+            const dist = Math.random() * 20;
+            const tx = Math.cos(angle) * dist;
+            const ty = Math.sin(angle) * dist;
+            
+            dot.animate([
+                { transform: 'scale(1)', opacity: 0.5 },
+                { transform: `translate(${tx}px, ${ty}px) scale(0)`, opacity: 0 }
+            ], {
+                duration: 1000,
+                easing: 'ease-out',
+                fill: 'forwards'
+            }).onfinish = () => dot.remove();
+        }
+
+        function animatePhysics() {
+            floatingElements.forEach(item => {
+                // Distance to mouse
+                const dx = mouseX - item.x;
+                const dy = mouseY - item.y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                const repulsionRadius = 250;
+                
+                if (dist < repulsionRadius) {
+                    const force = (repulsionRadius - dist) / repulsionRadius;
+                    const angle = Math.atan2(dy, dx);
+                    
+                    // Push away
+                    item.vx -= Math.cos(angle) * force * 2;
+                    item.vy -= Math.sin(angle) * force * 2;
+                }
+                
+                // Return to origin (Spring force)
+                const ox = item.originX - item.x;
+                const oy = item.originY - item.y;
+                
+                item.vx += ox * 0.05;
+                item.vy += oy * 0.05;
+                
+                // Friction
+                item.vx *= 0.9;
+                item.vy *= 0.9;
+                
+                // Update pos
+                item.x += item.vx;
+                item.y += item.vy;
+                
+                // Apply
+                item.element.style.transform = `translate(${item.x - item.originX}px, ${item.y - item.originY}px)`;
+            });
+            
+            requestAnimationFrame(animatePhysics);
+        }
+        animatePhysics();
+
+
+        // --- SECTION 2: SCROLL TRIGGER CONSTRUCTION ---
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const section2Observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    // Change cursor
+                    cursor.style.backgroundColor = '#2D5BFF';
+                    cursor.style.borderRadius = '0'; // Square cursor
+                    cursor.style.transform = 'translate(-50%, -50%) rotate(45deg)';
+                } else {
+                    entry.target.classList.remove('in-view');
+                }
+            });
+        }, observerOptions);
+
+        section2Observer.observe(document.getElementById('section-2'));
+
+
+        // --- SECTION 3: BRUTALIST STAMP & SLOT MACHINE ---
+        const section3 = document.getElementById('section-3');
+        const bentoItems = document.querySelectorAll('.bento-item');
+        const stampTexts = document.querySelectorAll('.stamp-target h2');
+
+        const section3Observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Trigger Entry Animation
+                    bentoItems.forEach(item => {
+                        setTimeout(() => {
+                            item.classList.add('locked-in');
+                            // Camera shake effect on the section
+                            if(item.classList.contains('stamp-target')) {
+                                setTimeout(() => section3.classList.add('shake-screen'), 600);
+                                setTimeout(() => section3.classList.remove('shake-screen'), 1000);
+                            }
+                        }, parseInt(item.dataset.delay));
+                    });
+
+                    // Cursor change
+                    cursor.style.backgroundColor = 'black';
+                    cursor.style.borderRadius = '50%';
+                    cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+                }
+            });
+        }, { threshold: 0.3 });
+
+        section3Observer.observe(section3);
+
+        // Slot Machine Effect on Hover
+        const fonts = ['font-var-1', 'font-var-2', 'font-var-3', 'font-var-4', 'font-var-5'];
+        
+        bentoItems.forEach(item => {
+            const textElement = item.querySelector('h2');
+            if(!textElement) return;
+            
+            let interval;
+            
+            item.addEventListener('mouseenter', () => {
+                let counter = 0;
+                interval = setInterval(() => {
+                    // Remove all fonts
+                    fonts.forEach(f => textElement.classList.remove(f));
+                    // Add random font
+                    const randomFont = fonts[Math.floor(Math.random() * fonts.length)];
+                    textElement.classList.add(randomFont);
+                }, 50); // Speed of cycle
+            });
+
+            item.addEventListener('mouseleave', () => {
+                clearInterval(interval);
+                // Reset to original font-var-1
+                fonts.forEach(f => textElement.classList.remove(f));
+                textElement.classList.add('font-var-1');
+            });
+        });
+
+        // Handle Window Resize for Scatter Physics
+        window.addEventListener('resize', () => {
+            floatingElements.forEach(item => {
+                // Re-calculate origin based on percentage
+                const posX = parseFloat(item.element.style.left);
+                const posY = parseFloat(item.element.style.top);
+                item.originX = window.innerWidth * (posX/100);
+                item.originY = window.innerHeight * (posY/100);
+            });
+        });
+
+    </script>
+</body>
+</html>
