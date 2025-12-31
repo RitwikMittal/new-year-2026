@@ -709,9 +709,9 @@ function showPersonalizedMessage() {
     const messageText = document.getElementById('messageText');
     
     const messages = [
-        `Dear ${window.userName}, as we step into 2026, I wish you a year filled with endless possibilities, boundless joy, and countless moments of success. May every day bring you closer to your dreams and fill your heart with happiness. Here's to new adventures, cherished memories, and a bright future ahead!`,
-        `${window.userName}, may 2026 be the year where all your dreams take flight! Wishing you prosperity, good health, and the courage to chase what sets your soul on fire. May you find magic in every moment and strength in every challenge. Cheers to an amazing year ahead!`,
-        `Wishing you, ${window.userName}, a spectacular 2026! May this year bring you peace, prosperity, and all the happiness you deserve. Here's to creating beautiful memories, achieving great milestones, and spreading smiles wherever you go. Happy New Year!`
+        `Dear ${window.userName}, as we step into 2026, I want to take a moment to thank you for everything you've brought into my life. Your presence and the memories we've shared have been truly special. I wish you a year filled with endless possibilities, boundless joy, and countless moments of success. May every day bring you closer to your dreams and fill your heart with happiness. Here's to new adventures, cherished memories, and a bright future ahead!`,
+        `${window.userName}, thank you for being such an important part of my journey. The laughter, moments, and experiences you've brought into my life are treasures I deeply cherish. May 2026 be the year where all your dreams take flight! Wishing you prosperity, good health, and the courage to chase what sets your soul on fire. May you find magic in every moment and strength in every challenge. Cheers to an amazing year ahead!`,
+        `Wishing you, ${window.userName}, a spectacular 2026! I'm grateful for all the joy, wisdom, and warmth you've brought into my life. Your friendship means the world to me. May this year bring you peace, prosperity, and all the happiness you deserve. Here's to creating beautiful memories, achieving great milestones, and spreading smiles wherever you go. Happy New Year!`
     ];
     
     // Pick a random message
